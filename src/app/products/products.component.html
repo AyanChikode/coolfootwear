@@ -1,23 +1,28 @@
-<div class="container">
-  <div class="row">
-    <div class="col-md-3" *ngFor="let product of products">
-      <div class="card mb-3">
-           <a routerLink="/product">
+<h2>Products List</h2>
+<hr>
 
-               <img [src]="product.image"      
-               alt="product.title" 
-               class="card-img-top" 
-               height="200"
-               width="">
-            </a> 
+<div class="row">
+  <div class="col-lg-3" *ngFor="let product of products">
+    
+    <a [routerLink]="['/product', product.id]">
+      <div class="card" style="height:380px; margin:5px;">
+        
+        <img 
+          [src]="product.image" 
+          alt="product.title" 
+          class="card-img-top" 
+          height="260"
+        >
+        
         <div class="card-body">
-          <h3>{{ product.title }}</h3>
-          <p>₹ {{ product.price }}</p>
-          <p>{{ product.category }}</p>
-          <!-- <p>{{product.description}}</p> -->
-          
+          <h5 class="card-title">{{ product.title }}</h5>
+          <p class="card-text">
+            ₹ {{ product.price }}
+          </p>
         </div>
+
       </div>
-    </div>
+    </a>
+
   </div>
 </div>

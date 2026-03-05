@@ -1,5 +1,5 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { ApiService } from '../apiservice.service';
 
 @Component({
   selector: 'app-products',
@@ -8,15 +8,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProductsComponent implements OnInit {
 
-  products: any;
+  products: any[] = [];
 
-  constructor(private http: HttpClient) {
-    
+  constructor(private api: ApiService) {}
+
+  ngOnInit(): void {
+    this.loadProducts();
   }
 
-  ngOnInit() {
-    this.http.get('https://fakestoreapi.com/products').subscribe((data) => {
-        this.products = data;
-      });
+  loadProducts(): void {
+    this.api.getProducts('products').subscribe({
+      next: (result: any) => {
+        this.products = result;
+      },
+      error: (err) => {
+        console.error('Error loading products', err);
+      }
+    });
   }
 }
