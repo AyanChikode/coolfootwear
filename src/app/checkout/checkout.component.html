@@ -1,0 +1,242 @@
+<div class="container mt-4">
+<div class="row">
+    
+
+<!-- LEFT SIDE BILLING FORM -->
+
+<div class="col-md-8">
+
+<h4>Billing Details</h4>
+
+<form (ngSubmit)="placeOrder()">
+
+<!-- Country -->
+
+<div class="mb-3">
+<label>Select Country</label>
+
+<select class="form-control"
+[(ngModel)]="order.country"
+name="country">
+
+<option value="">Select country</option>
+<option>India</option>
+<option>USA</option>
+<option>UK</option>
+
+</select>
+</div>
+
+<div class="row">
+
+<!-- First Name -->
+
+<div class="col-md-6 mb-3">
+<label>First Name</label>
+
+<input
+type="text"
+class="form-control"
+[(ngModel)]="order.firstname"
+name="firstname"
+placeholder="Your firstname">
+</div>
+
+<!-- Last Name -->
+
+<div class="col-md-6 mb-3">
+<label>Last Name</label>
+
+<input
+type="text"
+class="form-control"
+[(ngModel)]="order.lastname"
+name="lastname"
+placeholder="Your lastname">
+</div>
+
+</div>
+
+<!-- Company -->
+
+<!-- <div class="mb-3">
+<label>Company Name</label>
+
+<input
+type="text"
+class="form-control"
+[(ngModel)]="order.company"
+name="company"
+placeholder="Company Name">
+</div> -->
+
+<!-- Address -->
+
+<div class="mb-3">
+<label>Address</label>
+
+<input
+type="text"
+class="form-control"
+[(ngModel)]="order.address"
+name="address"
+placeholder="Enter your address">
+</div>
+
+<!-- <div class="mb-3">
+<input
+type="text"
+class="form-control"
+[(ngModel)]="order.address2"
+name="address2"
+placeholder="Second Address">
+</div> -->
+
+<!-- City -->
+
+<div class="mb-3">
+<label>Town / City</label>
+
+<input
+type="text"
+class="form-control"
+[(ngModel)]="order.city"
+name="city"
+placeholder="Town or City">
+</div>
+
+<div class="row">
+
+<!-- State -->
+
+<div class="col-md-6 mb-3">
+<label>State</label>
+
+<input
+type="text"
+class="form-control"
+[(ngModel)]="order.state"
+name="state"
+placeholder="State">
+</div>
+
+<!-- Zip -->
+
+<div class="col-md-6 mb-3">
+<label>Zip Code</label>
+
+<input
+type="text"
+class="form-control"
+[(ngModel)]="order.zip"
+name="zip"
+placeholder="Zip Code">
+</div>
+
+</div>
+
+</form>
+
+</div>
+
+<!-- RIGHT SIDE -->
+
+<div class="col-md-4">
+
+<!-- CART TOTAL -->
+
+<div class="card p-3 mb-3">
+
+<h5>Cart Total</h5>
+
+<p>Subtotal : {{total | currency:'INR'}}</p>
+
+<div *ngFor="let item of cartProducts">
+
+<p>
+{{item.qty}} x {{item.title}}
+<span class="float-end">
+{{item.price * item.qty | currency:'INR'}}
+</span>
+</p>
+
+</div>
+
+<p>Shipping : ₹0</p>
+
+<hr>
+
+<h5>
+Order Total :
+{{total | currency:'INR'}}
+</h5>
+
+</div>
+
+<!-- PAYMENT METHOD -->
+
+<div class="card p-3">
+
+<h5>Payment Method</h5>
+
+<div class="form-check">
+
+<input
+type="radio"
+class="form-check-input"
+name="payment"
+value="bank"
+[(ngModel)]="order.payment">
+
+<label>Direct Bank Transfer</label>
+
+</div>
+
+<div class="form-check">
+
+<input
+type="radio"
+class="form-check-input"
+name="payment"
+value="check"
+[(ngModel)]="order.payment">
+
+<label>Check Payment</label>
+
+</div>
+
+<div class="form-check">
+
+<input
+type="radio"
+class="form-check-input"
+name="payment"
+value="paypal"
+[(ngModel)]="order.payment">
+
+<label>Paypal</label>
+
+</div>
+
+<div class="form-check mt-2">
+
+<input type="checkbox" class="form-check-input">
+
+<label>I accept terms and conditions</label>
+
+</div>
+
+<button
+class="btn btn-success w-100 mt-3"
+(click)="placeOrder()">
+
+Place Order
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+</div>

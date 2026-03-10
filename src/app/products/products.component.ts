@@ -3,27 +3,20 @@ import { ApiService } from '../apiservice.service';
 
 @Component({
   selector: 'app-products',
-  templateUrl: './products.component.html',
-  styleUrls: ['./products.component.css']
+  templateUrl: './products.component.html'
 })
 export class ProductsComponent implements OnInit {
 
-  products: any[] = [];
+  products:any = [];
 
-  constructor(private api: ApiService) {}
+  constructor(private api:ApiService){}
 
-  ngOnInit(): void {
-    this.loadProducts();
-  }
+  ngOnInit(){
 
-  loadProducts(): void {
-    this.api.getProducts('products').subscribe({
-      next: (result: any) => {
-        this.products = result;
-      },
-      error: (err) => {
-        console.error('Error loading products', err);
-      }
+    this.api.getProducts().subscribe((data:any)=>{
+      this.products = data;
     });
+
   }
+
 }

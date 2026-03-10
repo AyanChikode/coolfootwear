@@ -1,1 +1,67 @@
-<p>cart works!</p>
+
+<div class="container-fluid">
+    <h2>Cart</h2>
+
+<table class="table">
+
+<tr>
+<th>Image</th>
+<th>Title</th>
+<th>Price</th>
+<th>Qty</th>
+<th>Total</th>
+<th>Action</th>
+</tr>
+
+<tr *ngFor="let item of cartProducts; let i=index">
+
+<td>
+<img [src]="item.image" width="50" alt="">
+</td>
+
+<td>{{item.title}}</td>
+
+<td>{{item.price | currency:'INR'}}</td>
+
+<td class="d-flex align-items-center gap-2">
+
+<button (click)="remove(i)" class="btn btn-secondary btn-sm text-dark">-</button>
+
+<span>{{item.qty}}</span>
+
+<button (click)="add(i)" class="btn btn-success btn-sm text-dark">+</button>
+
+</td>
+
+<td>
+{{item.price * item.qty | currency:'INR'}}
+</td>
+
+<td>
+<button (click)="removeItem(i)" class="btn btn-primary btn-sm text-dark">
+<i class="fa-solid fa-xmark fa-lg text-dark"> </i>
+</button>
+</td>
+
+</tr>
+
+</table>
+
+<h3 class="text-end me-5 fs-1">Total : {{total | currency:'INR'}}</h3>
+
+
+</div>
+<div class="d-flex justify-content-end mt-3">
+<a [routerLink]="['/checkout']">
+    
+    <button 
+    class="btn btn-success px-4 "
+    
+    (click)="checkout()">
+    
+    Proceed To Checkout
+    
+</button>
+</a>
+
+</div>

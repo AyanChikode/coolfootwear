@@ -3,73 +3,87 @@ import { ActivatedRoute } from '@angular/router';
 import { ApiService } from '../apiservice.service';
 
 @Component({
-  selector: 'app-product',
-  templateUrl: './product.component.html',
-  styleUrls: ['./product.component.css']
+  selector:'app-product',
+  templateUrl:'./product.component.html'
 })
-export class ProductComponent implements OnInit {
+export class ProductComponent implements OnInit{
 
-  productId!: any;
-  product: any;
-  qty: number = 1;
+  id:any
+  product:any
 
-  cartProducts: any[] = [];
+  qty:number = 1
 
-  constructor(
-    private api: ApiService,
-    private route: ActivatedRoute
-  ) {}
+  cartProducts:any = []
 
-  ngOnInit(): void {
+  constructor(private route:ActivatedRoute,
+              private api:ApiService){}
 
-    // Route param get karo
-    this.productId = this.route.snapshot.paramMap.get('id') || '';
+  ngOnInit(){
 
-    // Product fetch karo
-    this.api.getById('products', this.productId)
-      .subscribe((result: any) => {
-        this.product = result;
-      });
+    this.id = this.route.snapshot.paramMap.get('id')
 
-    // Cart load karo
-    this.cartProducts = JSON.parse(localStorage.getItem('cartProducts') || '[]');
+    this.api.getProductById(this.id)
+    .subscribe((res:any)=>{
+      this.product = res
+    })
+
+    let data = localStorage.getItem("cartProducts")
+
+    if(data){
+      this.cartProducts = JSON.parse(data)
+    }
+
   }
 
-  add(): void {
-    this.qty++;
+  add(){
+    this.qty = this.qty + 1
   }
 
-  remove(): void {
-    if (this.qty > 1) {
-      this.qty--;
+  remove(){
+    if(this.qty>1){
+      this.qty = this.qty - 1
     }
   }
 
-  addToCart(): void {
+  addToCart(){
 
-    const existingItem = this.cartProducts.find(
-      item => item.id === this.product.id
-    );
+    let found = false
 
-    if (existingItem) {
-      existingItem.qty += this.qty;
-    } else {
-      const cartItem = {
-        id: this.product.id,
-        title: this.product.title,
-        price: this.product.price,
-        image: this.product.image,
-        qty: this.qty
-      };
+    for(let i=0;i<this.cartProducts.length;i++){
 
-      this.cartProducts.push(cartItem);
+      if(this.cartProducts[i].id == this.product.id){
+
+        this.cartProducts[i].qty =
+        this.cartProducts[i].qty + this.qty
+
+        found = true
+      }
+
+    }
+
+    if(!found){
+
+      let item = {
+
+        id:this.product.id,
+        title:this.product.title,
+        price:this.product.price,
+        image:this.product.image,
+        qty:this.qty
+
+      }
+
+      this.cartProducts.push(item)
+
     }
 
     localStorage.setItem(
-      'cartProducts',
+      "cartProducts",
       JSON.stringify(this.cartProducts)
-    );
+    )
 
-    // alert('Product added to cart');
+    alert("Product added to cart")
+
   }
+
 }
